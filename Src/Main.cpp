@@ -23,7 +23,7 @@
 int main ( int argc, char* argv[] )
 {
     srand( time(NULL) );
-    sf::RenderWindow App(sf::VideoMode(800,600,32),"Fireworks");
+    sf::RenderWindow App(sf::VideoMode(800,600,32),"Sf-Fireworks");
     sf::Event AppEvent;
 
     std::vector<Firework*> Fireworks;

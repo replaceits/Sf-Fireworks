@@ -92,35 +92,40 @@ int main ( int argc, char* argv[] )
         }
         if(Polltimer.getElapsedTime().asMilliseconds() >= 50)
         {
-            for( std::vector<Particle*>::iterator it = Particles.begin(); it != Particles.end(); ++it )
+            for( std::vector<Particle*>::iterator it = Particles.begin(); it != Particles.end();)
             {
                 if(!(*it)->Poll())
                 {
                     delete *it;
-                    Particles.erase(it);
-                    it--;
+                    it = Particles.erase(it);
                 }
+					 else
+						 ++it;
             }
-            for( std::vector<Firework*>::iterator it = Fireworks.begin(); it != Fireworks.end(); ++it )
+
+            for( std::vector<Firework*>::iterator it = Fireworks.begin(); it != Fireworks.end();)
             {
                 if(!(*it)->Poll())
                 {
                     for(unsigned short int i = 0; i < 50; i++)
                         Explosions.push_back(new Explosion((*it)->GetPosition(),(*it)->GetColor()));
+
                     delete *it;
-                    Fireworks.erase(it);
-                    it--;
+                    it = Fireworks.erase(it);
                 }
+					 else
+						++it;
             }
-            for( std::vector<Explosion*>::iterator it = Explosions.begin(); it != Explosions.end(); ++it )
+            for( std::vector<Explosion*>::iterator it = Explosions.begin(); it != Explosions.end();)
             {
                 if(!(*it)->Poll())
                 {
                     Particles.push_back(new Particle((*it)->GetPosition(),(*it)->GetColor()));
                     delete *it;
-                    Explosions.erase(it);
-                    it--;
+                    it = Explosions.erase(it);
                 }
+					 else
+						 ++it;
             }
             Polltimer.restart();
         }
